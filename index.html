@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="theme.css" />
   </head>
   <body>
-    <div class="container" id="app">
+    <div class="container" id="app" v-cloak>
       <div class="card">
         <h1>План по изучению Vue.js</h1>
 
@@ -15,19 +15,23 @@
           <div class="steps-content">{{steps[activeIndex].text}}</div>
           <ul class="steps-list">
             <li class="steps-item active"><span>1</span> {{steps[0].title}}</li>
-            <li class="steps-item"><span>2</span> {{steps[1].title}}</li>
-            <li class="steps-item"><span>3</span> {{steps[2].title}}</li>
-            <li class="steps-item"><span>4</span> {{steps[3].title}}</li>
-            <li class="steps-item"><span>5</span> {{steps[4].title}}</li>
+            <li class="steps-item done"><span>2</span> {{steps[1].title}}</li>
+            <li class="steps-item disabled">
+              <span>3</span> {{steps[2].title}}
+            </li>
+            <li class="steps-item danger"><span>4</span> {{steps[3].title}}</li>
+            <li class="steps-item hover"><span>5</span> {{steps[4].title}}</li>
           </ul>
           <div>
-            <button class="btn" @click="prev()">{{buttonStatus.back}}</button>
+            <button class="btn" @click="prev()" v-if="activeIndex!=4">
+              Назад
+            </button>
             <button
               class="btn"
-              :class="{ primary: status.isActive }"
+              :class="{ primary: statusPrimary, active: statusActive, disabled: statusDisabled, done: statusDone }"
               @click="nextOfFinish()"
             >
-              {{buttonStatus.forever}}
+              {{buttonText}}
             </button>
           </div>
         </div>
